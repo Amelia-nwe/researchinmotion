@@ -27,7 +27,6 @@
   --dot:rgba(240,236,248,.06); --blue:#6C82FF; --violet:#A585FF; --shadow:#000000; --term-bg:#0A0812; color-scheme:dark}
 
 *{box-sizing:border-box}
-     [hidden]{display:none!important}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background-color:var(--paper);background-image:radial-gradient(var(--dot) 1.2px,transparent 1.3px);background-size:14px 14px;color:var(--ink);font:16px/1.6 var(--body)}
@@ -157,7 +156,7 @@ section{padding-block:clamp(56px,8vw,96px)}
 .skills span{font-family:var(--term);font-size:19px;padding:2px 10px;border:2px solid var(--line);background:var(--c);color:var(--on-c);transform:rotate(var(--r,0deg))}
 .logwin .bar{--c:var(--violet)}
 .log{list-style:none;margin:0;padding:16px 18px;display:grid;gap:12px;font-size:15px}
-.log li{display:grid;grid-template-columns:minmax(0,104px) minmax(0,1fr);gap:12px}
+.log li{display:grid;grid-template-columns:minmax(0,130px) minmax(0,1fr);gap:12px}
 .log .d{font-family:var(--term);font-size:19px;color:var(--muted)}
 .log li:last-child .d::after{content:"_";animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
@@ -173,6 +172,19 @@ footer{padding-block:28px 40px;font-family:var(--term);font-size:19px;color:var(
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+/* project window: always fits the screen, content scrolls inside */
+.panel{max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:hidden}
+.panel .scroll{flex:1 1 auto;overscroll-behavior:contain}
+.panel .thumb{aspect-ratio:21/6}
+@media (max-width:540px){.panel .thumb{aspect-ratio:21/8}}
+.pbody dl{grid-template-columns:minmax(0,160px) minmax(0,1fr)}
+.pbody dt{white-space:nowrap}
+@media (max-width:540px){.pbody dl{grid-template-columns:1fr}}
+#contact{padding-bottom:clamp(40px,6vw,72px)!important}
+.ticker span:nth-child(5n+2) em{color:var(--pink)}
+.ticker span:nth-child(5n+3) em{color:var(--teal)}
+.ticker span:nth-child(5n+4) em{color:var(--blue)}
+.ticker span:nth-child(5n+5) em{color:var(--violet)}
 </style>
 </head>
 <body>
@@ -183,7 +195,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
     <nav aria-label="Main"><a href="#work">work</a><a href="#about">about</a><a href="#contact">contact</a></nav>
   </div>
 </header>
-<div class="ticker" aria-label="What I'm working on now">
+<div class="ticker" aria-label="Topics I've worked on">
   <div class="track" id="track"></div>
 </div>
 
@@ -197,6 +209,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
         <div class="cta">
           <a class="btn" href="#work" style="--c:var(--yellow)">See my work</a>
           <a class="btn" href="#contact" style="--c:var(--teal)">Say hi</a>
+          <a class="btn" href="vibration-sensor.html" style="--c:var(--pink)">My latest research →</a>
         </div>
       </div>
       <div class="win simwin">
@@ -232,14 +245,15 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
         <p>I'm a Materials Science and Engineering student at the University of Manchester. I'm most interested in metamaterials and where they're heading: quantum computing, automation, and even medicine.</p>
         <p>Research in Motion started as a passion project the summer after my first-year exams. I love animating and reading research, so I combined the two. Now it's also where I document everything I build.</p>
         <div class="skills" aria-label="Skills">
-          <span style="--c:var(--blue);--r:-2deg">CST Microwave Studio</span><span style="--c:var(--yellow);--r:1deg">Python</span><span style="--c:var(--teal);--r:-1deg">OpenCV</span><span style="--c:var(--pink);--r:2deg">Flask</span><span style="--c:var(--violet);--r:-1.5deg">Raspberry Pi</span><span style="--c:var(--yellow);--r:1.5deg">RF metasurfaces</span><span style="--c:var(--pink);--r:-1deg">Animation</span><span style="--c:var(--teal);--r:1deg">Sci-comm</span>
+          <span style="--c:var(--blue);--r:-2deg">CST Microwave Studio</span><span style="--c:var(--yellow);--r:1deg">Python</span><span style="--c:var(--teal);--r:-1deg">MATLAB</span><span style="--c:var(--pink);--r:2deg">Autodesk Fusion 360</span><span style="--c:var(--violet);--r:-1.5deg">SolidWorks</span><span style="--c:var(--yellow);--r:1.5deg">Bambu Studio</span><span style="--c:var(--blue);--r:-1deg">Raspberry Pi</span><span style="--c:var(--teal);--r:1deg">RF metasurfaces</span><span style="--c:var(--pink);--r:-1deg">Animation</span><span style="--c:var(--violet);--r:1.5deg">Sci-comm</span>
         </div>
       </div>
       <div class="win logwin">
         <div class="bar"><span class="t">changelog.txt</span><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
         <ol class="log">
+          <li><span class="d">2023</span><span>RCSU Science Challenge</span></li>
           <li><span class="d">2025.SUMMER</span><span>Started Research in Motion</span></li>
-          <li><span class="d">2025–26</span><span>Joined the ManSEDS rover and rocket payload teams</span></li>
+          <li><span class="d">2025–26</span><span>Joined rover and rocket payload teams @ ManSEDS</span></li>
           <li><span class="d">2026.SUMMER</span><span>UKMMN summer studentship on metasurface vibration sensing</span></li>
           <li><span class="d">NEXT</span><span>Metamaterials animation series, episode 1</span></li>
         </ol>
@@ -261,7 +275,6 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
   </section>
 </main>
 
-<footer><div class="wrap"><span>© 2026 Hnin · Research in Motion</span><span>rendered with three.js</span></div></footer>
 
 <div class="overlay" id="overlay" hidden>
   <div class="win panel" role="dialog" aria-modal="true" aria-labelledby="ptitle" id="panel"></div>
@@ -279,34 +292,31 @@ const PROJECTS = [
     title: "Metasurface vibration sensor", file: "metasurface_sensor",
     type: "research", when: "Summer 2026", art: "lattice",
     blurb: "A passive, battery-free, wireless vibration sensor for aircraft engines.",
-    problem: "Aircraft engines need vibration monitoring, but wired, battery-powered sensors are hard to place in hot, moving parts.",
-    did: "Over an 8-week UKMMN summer studentship I designed mechanically modulated metasurfaces operating at 2.4 GHz on polyimide. I modelled Huygens unit cells in CST Microwave Studio and compared C₆ hexagonal and C₄ symmetric scatterer designs.",
-    result: "Unit-cell designs and a proposed sensor architecture. Write-up in progress.",
-    video: "", link: "", linkLabel: "",
-
-    tools: ["CST Microwave Studio", "RF design", "Polyimide", "2.4 GHz"]
+    problem: "Vibration monitoring of aircraft engines is essential for their maintenance, and consequently for the environment. Metasurface sensors may be the key to battery-less, low-cost alternatives to conventional sensors.",
+    did: "Over the 10-week UKMMN summer studentship, I designed mechanically modulated metasurfaces operating in the ISM band on polyimide. The unit cell design was referenced from previously studied Huygens’ scatterers and modelled in CST Microwave Studio. Rigs were designed in Fusion 360 and 3D printed to replicate the cylindrical bending simulated in CST.",
+    result: "The metasurface and unit cell showed a good resonance peak and phase modulation in both experimental and simulated data. However, the differences between the two datasets can be a consequence of the experimental setup and design.",
+    video: "", link: "vibration-sensor.html", linkLabel: "Read the full story",
+    tools: ["CST Microwave Studio", "RF design", "MATLAB", "Excel", "Autodesk Fusion 360"]
   },
   {
-    title: "Olympus Rover", file: "olympus_rover",
+    title: "Olympus Rover Trials: Team Lead", file: "olympus_rover",
     type: "engineering", when: "2025–26", art: "rover",
-    blurb: "Vision system for the ManSEDS entry to the Olympus Rover Trials.",
-    problem: "The rover had to find and report QR markers and stream live video back to the operator during the competition.",
-    did: "I wrote the rover's Python camera application on a Raspberry Pi 4. It detects QR codes with OpenCV and pyzbar, streams live MJPEG video through Flask, and runs continuous autofocus on a Camera Module 3.",
-    result: "Met the competition's imaging requirements, including image submission.",
+    blurb: "Leading the ManSEDS team for the Olympus Rover Trials, and designing the rover's wheels.",
+    problem: "The rover had to find and report QR markers and stream live video back to the operator during the competition. It also had to traverse gravel terrain and survive a vibration test.",
+    did: "As team lead, I organised team meetings, took notes on the team's progress, kept up with monthly reports, and submitted the PDR (Preliminary Design Review) and CDR (Critical Design Review), which decided whether our team was viable for the competition. On the technical side, I worked on the drive subsystem, where I designed the rover's wheels, taking inspiration from NASA's Curiosity rover.",
+    result: "Our rover passed the CDR and was cleared to compete at UKSEDS.",
     video: "", link: "", linkLabel: "",
-
-    tools: ["Python", "Raspberry Pi 4", "OpenCV", "pyzbar", "Flask"]
+    tools: ["Autodesk Fusion 360", "Bambu Studio"]
   },
   {
-    title: "Climate rocket payload", file: "launch4change",
+    title: "Launch4Change (L4C): Climate rocket payload", file: "launch4change",
     type: "engineering", when: "2025–26", art: "rocket",
-    blurb: "Launch 4 Change: a climate-sensing rocket payload with ManSEDS.",
+    blurb: "Designing the payload housing and choosing the sensors for a climate-sensing rocket payload with ManSEDS.",
     problem: "Design a payload that gathers climate data during a rocket flight.",
-    did: "Add what you worked on here.",
-    result: "Add the launch outcome here.",
+    did: "As a payload specialist, my main job was to design a housing for the sensors and electronics on board, and to justify why each chosen sensor is essential to the data being collected, so the data can be used to predict trends and observe the atmosphere for climate research.",
+    result: "Ongoing, with L4C 2027 still to come.",
     video: "", link: "", linkLabel: "",
-
-    tools: ["ManSEDS", "Payload design"]
+    tools: ["Autodesk Fusion 360", "SolidWorks"]
   },
   {
     title: "Metamaterials series", file: "metamaterials_ep01",
@@ -320,34 +330,36 @@ const PROJECTS = [
     tools: ["Animation", "Science communication"]
   },
   {
-    title: "Sustainable cities with nanomaterials", file: "nano_cities",
+    title: "University Coursework: Sustainable cities with nanomaterials", file: "nano_cities",
     type: "animation", when: "Coursework", art: "wave",
-    blurb: "Animated conclusion for a university presentation.",
-    problem: "Close a coursework presentation on how nanomaterials can make cities more sustainable.",
+    blurb: "Animated conclusion for a group presentation on nanomaterials and the UN Sustainable Development Goals.",
+    problem: "The project was about different applications of nanomaterials that help meet the UN's Sustainable Development Goals. We added a more creative angle: showing how four of the goals can tie together to build a sustainable city.",
     did: "Animated the presentation's conclusion to tie the arguments together visually.",
-    result: "Add a link to the video here.",
+    result: "Watch the animated conclusion above.",
     video: "", link: "", linkLabel: "",
-
     tools: ["Animation", "Nanomaterials"]
   },
   {
-    title: "RCSU Science Challenge", file: "rcsu_challenge",
-    type: "animation", when: "Competition", art: "wave",
-    blurb: "Animated entry to the RCSU Science Challenge.",
-    problem: "Communicate a science idea clearly for a competition audience.",
-    did: "Add a line about your entry here.",
-    result: "Add the outcome here.",
+    title: "RCSU Science Challenge: Imperial College London", file: "rcsu_challenge",
+    type: "animation", when: "2023", art: "wave",
+    blurb: "My first animation: an animated science video on quantum decoherence for the RCSU Science Challenge.",
+    problem: "My very first animation project, which I submitted to the RCSU Science Challenge in May 2023. I answered Professor Kathy Sykes's question, “I'd like you to describe a new frontier or dimension in science you think we're going to explore which will teach us more about ourselves, our world, or our Universe”, with the topic of quantum decoherence.",
+    did: "Produced an animated science video on quantum decoherence.",
+    result: "The animation was a shortlisted winner in two categories: one for the prompt, and the RCSU Prize for Excellence in Multi-Media for Science Communication. Watch the video above.",
     video: "", link: "", linkLabel: "",
-
     tools: ["Animation", "Science communication"]
   }
 ];
 
-/* Things you're working on right now. They scroll along the top bar. */
+/* Topics I've worked on. They scroll along the top bar: ["TOPIC", "detail"] */
 const NOW = [
-  ["Writing up", "the metasurface vibration sensor studentship"],
-  ["Building", "the ManSEDS rover for Olympus Rover Trials 25/26"],
-  ["Animating", "episode 1 of the Metamaterials series"]
+  ["Metamaterials", "Huygens scatterers & RF metasurfaces"],
+  ["Vibration sensing", "for aircraft engines"],
+  ["Space engineering", "rover design & rocket payloads"],
+  ["Climate", "atmospheric sensing payloads"],
+  ["Nanomaterials", "for sustainable cities"],
+  ["Quantum physics", "decoherence, animated"],
+  ["Science animation", "research brought to life"]
 ];
 
 const TYPES = {
