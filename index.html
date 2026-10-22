@@ -143,7 +143,7 @@ section{padding-block:clamp(56px,8vw,96px)}
 .pbody dt{font-family:var(--term);font-size:20px;color:var(--muted)}
 .pbody dd{margin:0}
 .video{aspect-ratio:16/9;max-width:100%;background:var(--term-bg);border-bottom:2px solid var(--line)}
-.video iframe{width:100%;height:100%;border:0;display:block}
+.video iframe,.video video{width:100%;height:100%;border:0;display:block;background:#000}
 .links{display:flex;flex-wrap:wrap;gap:12px}
 .tools{display:flex;flex-wrap:wrap;gap:6px}
 @media (max-width:540px){.pbody dl{grid-template-columns:1fr;gap:4px}.pbody dd{margin-bottom:10px}}
@@ -285,7 +285,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
 /* ===== ADD A NEW PROJECT: copy one block below and edit it. =====
    type: "research" | "engineering" | "animation"
    art:  "lattice" | "rover" | "rocket" | "wave"
-   video: paste a YouTube or Vimeo link and it plays inside the project window. Leave "" for none.
+   video: paste a YouTube or Vimeo link, OR the name of a video file you uploaded
+          next to index.html (e.g. "rcsu.mp4"). It plays inside the project window. "" = none.
    link:  any other page (paper, poster, GitHub). linkLabel is the button text.                    */
 const PROJECTS = [
   {
@@ -335,8 +336,8 @@ const PROJECTS = [
     blurb: "Animated conclusion for a group presentation on nanomaterials and the UN Sustainable Development Goals.",
     problem: "The project was about different applications of nanomaterials that help meet the UN's Sustainable Development Goals. We added a more creative angle: showing how four of the goals can tie together to build a sustainable city.",
     did: "Animated the presentation's conclusion to tie the arguments together visually.",
-    result: "Watch the animated conclusion above.",
-    video: "", link: "", linkLabel: "",
+    result: "Watch the animated conclusion below.",
+    video: "", link: "https://www.researchinmotion.co.uk/portfolio/v/university-coursework-conclusion-for-presentation", linkLabel: "Watch the video",
     tools: ["Animation", "Nanomaterials"]
   },
   {
@@ -345,8 +346,8 @@ const PROJECTS = [
     blurb: "My first animation: an animated science video on quantum decoherence for the RCSU Science Challenge.",
     problem: "My very first animation project, which I submitted to the RCSU Science Challenge in May 2023. I answered Professor Kathy Sykes's question, “I'd like you to describe a new frontier or dimension in science you think we're going to explore which will teach us more about ourselves, our world, or our Universe”, with the topic of quantum decoherence.",
     did: "Produced an animated science video on quantum decoherence.",
-    result: "The animation was a shortlisted winner in two categories: one for the prompt, and the RCSU Prize for Excellence in Multi-Media for Science Communication. Watch the video above.",
-    video: "", link: "", linkLabel: "",
+    result: "The animation was a shortlisted winner in two categories: one for the prompt, and the RCSU Prize for Excellence in Multi-Media for Science Communication. Watch the video below.",
+    video: "", link: "https://www.researchinmotion.co.uk/portfolio/v/rcsu-science-challenge", linkLabel: "Watch the video",
     tools: ["Animation", "Science communication"]
   }
 ];
@@ -403,6 +404,8 @@ function art(kind, seed){
   return `<svg viewBox="0 0 380 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${p}</svg>`;
 }
 
+/* a video file uploaded next to index.html, e.g. "rcsu.mp4" */
+function isFile(u){ return !!u && /\.(mp4|webm|m4v|mov)$/i.test(u.split("?")[0]); }
 function embedUrl(u){
   if(!u) return null;
   try{ const url=new URL(u), host=url.hostname.replace(/^www\.|^m\./,"");
@@ -454,13 +457,13 @@ function openProject(i){
   const p=PROJECTS[i]; lastFocus=document.activeElement;
   panel.style.setProperty("--c",TYPES[p.type].c);
   panel.innerHTML=`<div class="bar"><span class="t">${p.file}.prj</span><button class="xbtn" type="button" id="closeP" aria-label="Close">×</button></div>
-    <div class="scroll">${embedUrl(p.video)?`<div class="video"><iframe src="${embedUrl(p.video)}" title="${p.title} video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>`:`<div class="thumb">${art(p.art,i)}</div>`}
+    <div class="scroll">${isFile(p.video)?`<div class="video"><video src="${p.video}" controls playsinline preload="metadata"></video></div>`:embedUrl(p.video)?`<div class="video"><iframe src="${embedUrl(p.video)}" title="${p.title} video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>`:`<div class="thumb">${art(p.art,i)}</div>`}
     <div class="pbody">
       <div class="meta"><span class="tag ${p.soon?"soon":""}">${p.soon?"coming soon":TYPES[p.type].label}</span><span class="when">${p.when}</span></div>
       <h3 id="ptitle">${p.title}</h3>
       <dl><dt>// problem</dt><dd>${p.problem}</dd><dt>// what i did</dt><dd>${p.did}</dd><dt>// result</dt><dd>${p.result}</dd>
       <dt>// tools</dt><dd class="tools">${p.tools.map(t=>`<span class="tag">${t}</span>`).join("")}</dd></dl>
-      ${(p.video||p.link)?`<div class="links">${p.video?`<a class="btn" style="--c:var(--pink)" href="${p.video}" target="_blank" rel="noopener">▶ Watch video ↗</a>`:""}${p.link?`<a class="btn" style="--c:var(--yellow)" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel||"View more"} ↗</a>`:""}</div>`:""}
+      ${(p.video||p.link)?`<div class="links">${p.video&&!isFile(p.video)?`<a class="btn" style="--c:var(--pink)" href="${p.video}" target="_blank" rel="noopener">▶ Watch video ↗</a>`:""}${p.link?`<a class="btn" style="--c:var(--yellow)" href="${p.link}" target="_blank" rel="noopener">${p.linkLabel||"View more"} ↗</a>`:""}</div>`:""}
     </div></div>`;
   overlay.hidden=false; document.getElementById("closeP").focus();
 }
